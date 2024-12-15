@@ -1,9 +1,9 @@
-
+import {Button} from "./components/ui/button"
 import './App.css'
 
 const App = () => {
   return <div>
-    Welcome Boiz
+      <Button/>
   </div>
 }
 
