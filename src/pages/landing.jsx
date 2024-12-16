@@ -12,6 +12,15 @@ import companies from "../data/companies.json";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+import faqs from "../data/faq.json";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+
 const LandingPage = () => {
   return (
     <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
@@ -34,18 +43,19 @@ const LandingPage = () => {
       </section>
 
 
-      <div className="flex gap-6 justify-center">
-        <Link to={"/jobs"}>
-          <Button variant="blue" size="xl">
+      <div className="flex flex-col items-center sm:flex-row gap-6 justify-center ">
+        <Link to="/jobs" className="w-3/4 sm:w-auto">
+          <Button variant="blue" size="xl" className="w-full">
             Find Jobs
           </Button>
         </Link>
-        <Link to={"/post-job"}>
-          <Button variant="destructive" size="xl">
+        <Link to="/post-job" className="w-3/4 sm:w-auto">
+          <Button variant="destructive" size="xl" className="w-full">
             Post a Job
           </Button>
         </Link>
-      </div>
+</div>
+
 
       {/* Carousel */}
 
@@ -71,9 +81,9 @@ const LandingPage = () => {
       </Carousel>
   
 
-
+      {/* Banner */}
       <img src="/banner.jpeg" className="w-full" />
-
+      {/* Cards */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
   <Card className="transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out">
     <CardHeader>
@@ -97,6 +107,15 @@ const LandingPage = () => {
   
   
       {/* Accordion */}
+
+      <Accordion type="multiple" className="w-full">
+        {faqs.map((faq, index) => (
+          <AccordionItem key={index} value={`item-${index + 1}`}>
+            <AccordionTrigger>{faq.question}</AccordionTrigger>
+            <AccordionContent>{faq.answer}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </main>
     );
 }
