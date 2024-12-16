@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
+
 import {
   Carousel,
   CarouselContent,
@@ -8,6 +9,8 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import companies from "../data/companies.json";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const LandingPage = () => {
   return (
@@ -69,11 +72,28 @@ const LandingPage = () => {
   
 
 
-      {/* banner */}
+      <img src="/banner.jpeg" className="w-full" />
+
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <Card className="transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out">
+    <CardHeader>
+      <CardTitle className="font-bold">For Job Seekers</CardTitle>
+    </CardHeader>
+    <CardContent>
+      Search and apply for jobs, track applications, and more.
+    </CardContent>
+  </Card>
   
-      <section>
-        {/* cards */}
-      </section>
+  <Card className="transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out">
+    <CardHeader>
+      <CardTitle className="font-bold">For Employers</CardTitle>
+    </CardHeader>
+    <CardContent>
+      Post jobs, manage applications, and find the best candidates.
+    </CardContent>
+  </Card>
+</section>
+
   
   
       {/* Accordion */}
