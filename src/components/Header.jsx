@@ -6,7 +6,7 @@ return (
   <>
     <nav className=" py-4 flex justify-between items-center">
         <Link> 
-          <img src="/logo.png" className="h-20" />
+          <img src="/logo.png " className="h-20 transition-transform transform hover:scale-110" />
         </Link>
 
         <Button variant="outline">Login</Button>
