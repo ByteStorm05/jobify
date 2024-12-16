@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 const Header = () => {
 return (
   <>
@@ -9,6 +9,13 @@ return (
         </Link>
 
         <Button variant="outline">Login</Button>
+
+        {/* <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn> */}
     </nav>
   </>
 
