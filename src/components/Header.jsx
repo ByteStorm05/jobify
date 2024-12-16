@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import {Button} from './ui/button'
+// import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 const Header = () => {
 return (
   <>
