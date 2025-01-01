@@ -82,7 +82,7 @@ const LandingPage = () => {
   
 
       {/* Banner */}
-      <img src="/banner.jpeg" className="w-full" />
+      <img src="/banner_3.png" className="w-full" />
       {/* Cards */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
   <Card className="transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out">
