@@ -84,9 +84,9 @@ return (
     <SignedIn>
       <Button variant="destructive" className="rounded-full">
         <PenBox size={20} className="mr-2" />
-        Post a Job
+        <Link to="/post-job">Post a Job</Link>
       </Button>
-      <Link to="/post-job"></Link>
+     
       <UserButton
         appearance={{
           elements: {
