@@ -2,49 +2,39 @@ import supabaseClient from "@/utils/supabase";
 
 // Fetch Jobs
 export async function getJobs(token, { location, company_id, searchQuery }) {
-  // Initialize Supabase client with token from Clerk
-  const supabase = await supabaseClient(token); 
-  
-  // Start the query on the 'jobs' table, including related 'company' fields
+  const supabase = await supabaseClient(token);
   let query = supabase
     .from("jobs")
-    .select("*, company: companies(name, logo_url), saved: saved_jobs(id)");
+    .select("*, saved: saved_jobs(id), company: companies(name,logo_url)");
 
-  // Apply filters based on location, company_id, and searchQuery
   if (location) {
-    query = query.eq("location", location); // Filter by location
+    query = query.eq("location", location);
   }
 
   if (company_id) {
-    query = query.eq("company_id", company_id); // Filter by company_id
+    query = query.eq("company_id", company_id);
   }
 
   if (searchQuery) {
-    query = query.ilike("title", `%${searchQuery}%`); // Search for jobs by title
+    query = query.ilike("title", `%${searchQuery}%`);
   }
 
-  // Fetch the data and handle errors
   const { data, error } = await query;
 
   if (error) {
-    console.error("Error fetching Jobs:", error); // Log error if query fails
+    console.error("Error fetching Jobs:", error);
     return null;
   }
 
-  return data; // Return the fetched job data
+  return data;
 }
 
-
-
-
-
+// Read Saved Jobs
 export async function getSavedJobs(token) {
   const supabase = await supabaseClient(token);
-  const query = await supabase
+  const { data, error } = await supabase
     .from("saved_jobs")
     .select("*, job: jobs(*, company: companies(name,logo_url))");
-
-    const { data, error } = query;
 
   if (error) {
     console.error("Error fetching Saved Jobs:", error);
@@ -70,30 +60,10 @@ export async function getSingleJob(token, { job_id }) {
   if (error) {
     console.error("Error fetching Job:", error);
     return null;
-  } 
-
-  return data;
-}
-
-// Created updating hiring status hook
-
-export async function updateHiringStatus(token, { job_id }, isOpen) {
-  const supabase = await supabaseClient(token);
-  const { data, error } = await supabase
-    .from("jobs")
-    .update({ isOpen })
-    .eq("id", job_id)
-    .select();
-
-  if (error) {
-    console.error("Error Updating Hiring Status:", error);
-    return null;
   }
 
   return data;
 }
-
-
 
 // - Add / Remove Saved Job
 export async function saveJob(token, { alreadySaved }, saveData) {
@@ -128,8 +98,41 @@ export async function saveJob(token, { alreadySaved }, saveData) {
   }
 }
 
+// - job isOpen toggle - (recruiter_id = auth.uid())
+export async function updateHiringStatus(token, { job_id }, isOpen) {
+  const supabase = await supabaseClient(token);
+  const { data, error } = await supabase
+    .from("jobs")
+    .update({ isOpen })
+    .eq("id", job_id)
+    .select();
 
+  if (error) {
+    console.error("Error Updating Hiring Status:", error);
+    return null;
+  }
 
+  return data;
+}
+
+// get my created jobs
+export async function getMyJobs(token, { recruiter_id }) {
+  const supabase = await supabaseClient(token);
+
+  const { data, error } = await supabase
+    .from("jobs")
+    .select("*, company: companies(name,logo_url)")
+    .eq("recruiter_id", recruiter_id);
+
+  if (error) {
+    console.error("Error fetching Jobs:", error);
+    return null;
+  }
+
+  return data;
+}
+
+// Delete job
 export async function deleteJob(token, { job_id }) {
   const supabase = await supabaseClient(token);
 
@@ -142,6 +145,23 @@ export async function deleteJob(token, { job_id }) {
   if (deleteError) {
     console.error("Error deleting job:", deleteError);
     return data;
+  }
+
+  return data;
+}
+
+// - post job
+export async function addNewJob(token, _, jobData) {
+  const supabase = await supabaseClient(token);
+
+  const { data, error } = await supabase
+    .from("jobs")
+    .insert([jobData])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Error Creating Job");
   }
 
   return data;

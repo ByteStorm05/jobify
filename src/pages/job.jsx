@@ -19,6 +19,7 @@ import ApplicationCard from '../components/application-card';
 
 
 
+
 const job = () => {
 
   const { id } = useParams();
@@ -107,7 +108,7 @@ const job = () => {
     </h2>
     <MDEditor.Markdown
       source={job?.requirements}
-      className="bg-transparent sm:text-lg wmde-markdown" // add global ul styles - tutorial
+      className="bg-transparent sm:text-lg ul" // add global ul styles - tutorial
     />
 
 
